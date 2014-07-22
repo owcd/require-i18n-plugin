@@ -1,19 +1,21 @@
-define(["exports", "i18n"], function(exports, i18n) {
-  "use strict";
+define(["exports"], function(exports) {
+    "use strict";
 
-  exports.load = function(name, parentRequire, onload, config) {
-    // Bail out early during build.
-    if (config.isBuild) {
-      return onload();
-    }
+    exports.load = function(name, parentRequire, onload, config) {
+        // Bail out early during build.
+        if (config.isBuild) {
+            return onload();
+        }
 
-    // require the namespace
-    i18n.require(name).then(function loaded() {
-        onload();
-    });
-  };
+        // require the namespace
+        require(['i18n'], function loading(i18n) {
+            i18n.require(name).then(function loaded() {
+                onload();
+            });
+        });
+    };
 
-  exports.write = function(pluginName, moduleName, write) {
-    write("");
-  };
+    exports.write = function(pluginName, moduleName, write) {
+        write("");
+    };
 });
